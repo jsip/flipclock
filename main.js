@@ -7,6 +7,10 @@ const config = document.getElementById("config");
 const bgColorPicker = document.getElementById("bgColorPicker");
 const textColorPicker = document.getElementById("textColorPicker");
 const blockColorPicker = document.getElementById("blockColorPicker");
+const timerValue = document.getElementById("timerValue");
+const startPauseBtn = document.getElementById("startPauseBtn");
+const resetBtn = document.getElementById("resetBtn");
+const timeInput = document.getElementById("timeInput");
 
 let count = 0;
 let isFlipping = false;
@@ -78,35 +82,57 @@ const clock = document.getElementById("clock");
 const flips = clock.querySelectorAll(".flip");
 
 let timer;
-const startBtn = document.getElementById("startBtn");
-const timeInput = document.getElementById("timeInput");
 
-startBtn.addEventListener("click", () => {
-  clearInterval(timer);
-  config.classList.toggle("hidden");
-  const [hours, minutes] = parseTimeInput(timeInput.value);
-  const endTime = new Date(Date.now() + hours * 3600000 + minutes * 60000);
-  updateClock(endTime);
-  timer = setInterval(() => updateClock(endTime), 1000);
+startPauseBtn.addEventListener("click", () => {
+  if (startPauseBtn.dataset.state == "rts") {
+    clearInterval(timer);
+    config.classList.toggle("hidden");
+    resetBtn.classList.add("hidden");
+    startPauseBtn.dataset.state = "rtp";
+    startPauseBtn.textContent = "Pause";
+
+    let [hours, minutes, seconds] = parseTimeInput(timeInput.value);
+    
+    const endTime = new Date(Date.now() + hours * 3600000 + minutes * 60000 + seconds * 1000);
+
+    updateClock(endTime);
+    timer = setInterval(() => {
+      updateClock(endTime), 1000
+    });
+  } else {
+    config.classList.toggle("hidden");
+    resetBtn.classList.remove("hidden");
+    clearInterval(timer);
+    const timerAtPause = timerValue.value;
+    const [hours, minutes, seconds] = timerAtPause.match(/(\d{2})/g);
+    const ms = (hours * 3600 + minutes * 60 + seconds) * 1000;
+    formatCountdown(ms);
+    startPauseBtn.dataset.state = "rts";
+    startPauseBtn.textContent = "Start";
+    timeInput.value = `${hours}h${minutes}m${seconds}s`;
+  }
 });
 
 function parseTimeInput(input) {
   let hours = 0;
   let minutes = 0;
+  let seconds = 0;
 
-  const combinedMatch = input.match(/(\d+)h(\d+)?/);
-  const separateMinutesMatch = input.match(/(\d+)m/);
+  const timeArr = input.match(/(\d{1,2})[hms]/g);
 
-  if (combinedMatch) {
-    hours = parseInt(combinedMatch[1]);
-    if (combinedMatch[2]) {
-      minutes = parseInt(combinedMatch[2]);
-    }
-  } else if (separateMinutesMatch) {
-    minutes = parseInt(separateMinutesMatch[1]);
+  if (timeArr) {
+    timeArr.forEach((time) => {
+      if (time.includes("h")) {
+        hours = parseInt(time.replace("h", ""));
+      } else if (time.includes("m")) {
+        minutes = parseInt(time.replace("m", ""));
+      } else if (time.includes("s")) {
+        seconds = parseInt(time.replace("s", ""));
+      }
+    });
   }
 
-  return [hours, minutes];
+  return [hours, minutes, seconds];
 }
 
 function updateClock(endTime) {
@@ -117,6 +143,7 @@ function updateClock(endTime) {
     return;
   }
   const timeStr = formatCountdown(diff);
+  timerValue.value = timeStr;
   flipObjs.forEach((flipObj, i) => {
     const newDigit = timeStr[i];
     if (newDigit !== flipObj.frontNode.textContent) {
@@ -196,3 +223,13 @@ blockColorPicker.addEventListener("input", (e) => {
   localStorage.setItem("blockColor", blockColor);
 });
 
+resetBtn.addEventListener("click", (e) => {
+  clearInterval(timer);
+  timerValue.value = null;
+  startPauseBtn.dataset.state = "rts";
+  startPauseBtn.textContent = "Start";
+  timeInput.value = null;
+  flipObjs.forEach((flipObj) => {
+    flipObj.flipDown("number0", "number0");
+  });
+});

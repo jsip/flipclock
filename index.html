@@ -72,6 +72,13 @@
       </div>
     </div>
 
+    <input type="hidden" name="timerValue" id="timerValue">
+
+    <div class="flex justify-center space-x-4">
+      <button type="button" id="startPauseBtn" data-state="rts" class="self-center rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-[var(--text-color)] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Start</button>
+      <button type="button" id="resetBtn" class="hidden self-center rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-[var(--text-color)] shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Reset</button>
+    </div>
+
     <div class="flex flex-col justify-center items-center mb-6 h-1/4">
       <div class="flex">
         <button type="button" id="configBtn" class="text-gray-600 mb-4 mr-2">
@@ -112,10 +119,6 @@
               </div>
               <input type="text" name="timer" id="timeInput" class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="How long? (i.e. 1h30m)">
             </div>
-          </div>
-
-          <div class="flex self-end mb-0.5 ml-4">
-            <button type="button" id="startBtn" class="self-center rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Start</button>
           </div>
         </div>
       </div>
