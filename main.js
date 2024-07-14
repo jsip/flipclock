@@ -95,7 +95,10 @@ startPauseBtn.addEventListener("click", () => {
     
     const endTime = new Date(Date.now() + hours * 3600000 + minutes * 60000 + seconds * 1000);
 
-    updateClock(endTime);
+    setTimeout(() => {
+      updateClock(endTime);
+    }, 1000);
+
     timer = setInterval(() => {
       updateClock(endTime), 1000
     });
