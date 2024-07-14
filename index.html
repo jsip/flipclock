@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="main.js" defer></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+  <script src="jscolor.js"></script>
+  <script>
+    jscolor.presets.default = {
+      width: 200,
+      height: 50,
+      position: 'left',
+      previewPosition: 'left',
+      previewSize: 20,
+      backgroundColor: '#fff',
+      borderColor: '#fff',
+      controlBorderColor: '#fff',
+      palette: [
+        '#000000', '#ffffff', '#eee0ca', '#e1ccb7',
+        '#ddbea5', '#e5dfc3', '#ddc6c6', '#ece6e3',
+        '#cebfb6', '#c1b1a6', '#9aa0a3', '#e7d8db',
+        '#efd0c7', '#dbc2c4', '#f9e8e5', '#d5d3dd'
+      ],
+      paletteCols: 5,
+      hideOnPaletteClick: true
+    }
+  </script>
+</head>
+  <body class="h-screen w-full flex flex-col justify-center bg-[var(--bg-color)]">
+    <div class="clock my-8 flex flex-wrap justify-center" id="clock">
+      <div class="mx-8 flex-nowrap">
+        <div class="mb-4 text-sm font-semibold text-[var(--text-color)]">
+          Hours
+        </div>
+        <div class="flip down">
+          <div class="digital front number0"></div>
+          <div class="digital back number1"></div>
+        </div>
+        <div class="flip down">
+          <div class="digital front number0"></div>
+          <div class="digital back number1"></div>
+        </div>
+      </div>
+      <div class="mx-8 flex-nowrap">
+        <div class="mb-4 text-sm font-semibold text-[var(--text-color)]">
+          Minutes
+        </div>
+        <div class="flip down">
+          <div class="digital front number0"></div>
+          <div class="digital back number1"></div>
+        </div>
+        <div class="flip down">
+          <div class="digital front number0"></div>
+          <div class="digital back number1"></div>
+        </div>
+      </div>
+      <div class="mx-8 flex-nowrap">
+        <div class="mb-4 text-sm font-semibold text-[var(--text-color)]">
+          Seconds
+        </div>
+        <div class="flip down">
+          <div class="digital front number0"></div>
+          <div class="digital back number1"></div>
+        </div>
+        <div class="flip down">
+          <div class="digital front number0"></div>
+          <div class="digital back number1"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col justify-center items-center mb-6 h-1/4">
+      <div class="flex">
+        <button type="button" id="configBtn" class="text-[var(--text-color)] mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+          </svg>        
+        </button>
+        <button type="button" id="fullScreenBtn" class="text-[var(--text-color)] mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+          </svg>              
+        </button>
+      </div>
+      <div class="flex space-x-6 bg-white rounded-lg p-6" id="config">
+        <div class="flex h-fit">
+          <div class="">
+            <label for="background" class="block text-sm font-medium leading-6 text-gray-800">Background</label>
+            <input id="bgColorPicker" class="mt-2 text-xs font-base text-gray-600 border-0 appearance-none outline-none outline-none focus:outline-none ring-none focus:ring-none" data-jscolor="{value: '#000'}">
+          </div>
+
+          <div class="">
+            <label for="text" class="block text-sm font-medium leading-6 text-gray-800">Text</label>
+            <input id="textColorPicker" class="mt-2 text-xs font-base text-gray-600 border-0 appearance-none outline-none outline-none focus:outline-none ring-none focus:ring-none" data-jscolor="{value: '#000'}">
+          </div>
+
+          <div class="">
+            <label for="text" class="block text-sm font-medium leading-6 text-gray-800">Blocks</label>
+            <input id="blockColorPicker" class="mt-2 text-xs font-base text-gray-600 border-0 appearance-none outline-none outline-none focus:outline-none ring-none focus:ring-none" data-jscolor="{value: '#000'}">
+          </div>
+
+          <div class="block">
+            <label for="timer" class="block text-sm font-medium leading-6 text-gray-900">Timer</label>
+            <div class="relative mt-2 rounded-md shadow-sm">
+              <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>              
+              </div>
+              <input type="text" name="timer" id="timeInput" class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="How long? (i.e. 1h30m)">
+            </div>
+          </div>
+
+          <div class="flex self-end mb-0.5 ml-4">
+            <button type="button" id="startBtn" class="self-center rounded-full bg-white px-3 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
