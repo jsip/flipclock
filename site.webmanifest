@@ -2,7 +2,7 @@
   "name": "Flip Clock",
   "short_name": "Flip Clock",
   "description": "A simple and elegant flip clock.",
-  "start_url": "index.html",
+  "start_url": "/flipclock/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",

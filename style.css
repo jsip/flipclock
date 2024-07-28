@@ -1,12 +1,12 @@
 .flip {
   display: inline-block;
   position: relative;
-  width: 110px;
-  height: 200px;
-  line-height: 200px;
+  width: 148.5;
+  height: 270px;
+  line-height: 270px;
   border-radius: 10px;
   background: var(--block-color);
-  font-size: 200px;
+  font-size: 270px;
   color: var(--text-color);
   text-align: center;
   font-family: "Helvetica Neue";
